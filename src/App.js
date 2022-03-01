@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { connect } from 'react-redux';
+import {incrementAction, decrementAction } from './redux/actions/index.js'
+
+const mapStateToProps = (state) => ({
+  count: state.count,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  incrementCounter : () => {
+    dispatch(incrementAction())
+  },
+  decrementCounter : () => {
+    dispatch(decrementAction())
+  }
+})
+
+function App({count, incrementCounter, decrementCounter}) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App mt-5">
+      <button onClick={incrementCounter} type='button' className='btn  btn-primary'>+</button>
+      <span> {count} </span>
+      <button onClick={decrementCounter} type='button' className='btn  btn-primary'>-</button>
     </div>
   );
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
